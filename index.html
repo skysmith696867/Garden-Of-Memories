@@ -1,182 +1,960 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>sky’s secret garden</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sky’s Secret Garden</title>
+  <meta name="description" content="Find ur destiny if ur brave enough" />
+  <style>
+    :root{
+      --bg1:#07110c;
+      --bg2:#0b1a12;
+      --panel: rgba(10, 18, 13, .70);
+      --panel2: rgba(10, 18, 13, .50);
+      --ink:#ecfff2;
+      --muted:#b9d9c5;
+      --line: rgba(236,255,242,.16);
+      --accent:#9dffbf;
+      --accent2:#ffd1f1;
+      --gold:#ffd48a;
+      --shadow: rgba(0,0,0,.45);
+      --titleFont: ui-serif, "Georgia", "Times New Roman", serif;
+      --bodyFont: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 
-<style>
-body{
-  margin:0;
-  font-family:serif;
-  color:#ecfff2;
-  background:
-    radial-gradient(circle at 20% 10%, rgba(157,255,191,.2), transparent),
-    radial-gradient(circle at 80% 40%, rgba(255,209,241,.15), transparent),
-    linear-gradient(#07110c,#0b1a12);
-  overflow:hidden;
-}
+      /* “skin” hooks that change per matched character */
+      --heroGlow:
+        radial-gradient(900px 600px at 30% 20%, rgba(157,255,191,.22), transparent 62%),
+        radial-gradient(700px 500px at 70% 40%, rgba(255,209,241,.16), transparent 62%);
 
-/* ✨ MAGIC SHIMMER */
-body::after{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(circle at 30% 20%, rgba(157,255,191,.15), transparent),
-    radial-gradient(circle at 70% 60%, rgba(255,209,241,.12), transparent);
-  animation: shimmer 6s infinite alternate;
-}
-@keyframes shimmer{
-  from{opacity:.6;}
-  to{opacity:1;}
-}
+      --bgImage: none;
+    }
 
-/* 🌿 TITLE */
-h1{
-  text-align:center;
-  margin-top:20px;
-}
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
 
-/* 🌿 CARD */
-.card{
-  position:relative;
-  margin:30px auto;
-  width:90%;
-  max-width:500px;
-  padding:30px;
-  background:rgba(0,0,0,.4);
-  border-radius:20px;
-  backdrop-filter:blur(6px);
-}
+    body{
+      margin:0;
+      color:var(--ink);
+      font-family:var(--bodyFont);
+      background-image:
+        var(--bgImage),
+        var(--heroGlow),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      background-size: cover, auto, auto;
+      background-position: center, center, center;
+      background-attachment: fixed, fixed, fixed;
+      overflow-x:hidden;
+    }
 
-/* 🌿 VINE FRAME (IMAGE BUILT-IN) */
-.card::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:url("https://png.pngtree.com/png-clipart/20230920/original/pngtree-vintage-ornamental-floral-frame-with-green-vines-png-image_12560675.png") center/contain no-repeat;
-  pointer-events:none;
-  opacity:.8;
-}
+    /* Soft film-grain-ish */
+    body::before{
+      content:"";
+      position:fixed; inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(255,255,255,.06), transparent 50%),
+        radial-gradient(circle at 70% 40%, rgba(255,255,255,.05), transparent 55%),
+        radial-gradient(circle at 50% 90%, rgba(255,255,255,.04), transparent 60%);
+      mix-blend-mode: overlay;
+      opacity:.55;
+      z-index:0;
+    }
 
-/* INPUTS */
-input,select{
-  width:100%;
-  padding:10px;
-  margin:10px 0;
-  border-radius:10px;
-  border:none;
-  background:rgba(255,255,255,.1);
-  color:white;
-}
+    /* ✨ Magic shimmer veil */
+    body::after{
+      content:"";
+      position:fixed; inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(157,255,191,.14), transparent 55%),
+        radial-gradient(circle at 70% 60%, rgba(255,209,241,.10), transparent 55%),
+        radial-gradient(circle at 50% 92%, rgba(255,212,138,.08), transparent 60%);
+      opacity:.75;
+      animation: shimmer 7s ease-in-out infinite alternate;
+      z-index:0;
+    }
+    @keyframes shimmer{
+      from{ opacity:.55; filter: blur(0px); }
+      to{ opacity:1; filter: blur(.4px); }
+    }
 
-/* BUTTON */
-button{
-  padding:10px;
-  border:none;
-  border-radius:10px;
-  width:100%;
-  background:linear-gradient(90deg,#9dffbf,#ffd1f1);
-}
+    /* ✨ Firefly dots layer (subtle, non-annoying) */
+    .fireflies{
+      position:fixed; inset:0;
+      pointer-events:none;
+      z-index:1;
+      opacity:.65;
+      background:
+        radial-gradient(2px 2px at 12% 22%, rgba(255,209,241,.9), transparent 60%),
+        radial-gradient(2px 2px at 28% 58%, rgba(157,255,191,.9), transparent 60%),
+        radial-gradient(2px 2px at 44% 30%, rgba(255,212,138,.85), transparent 60%),
+        radial-gradient(2px 2px at 62% 66%, rgba(157,255,191,.85), transparent 60%),
+        radial-gradient(2px 2px at 78% 40%, rgba(255,209,241,.85), transparent 60%),
+        radial-gradient(2px 2px at 86% 74%, rgba(255,212,138,.85), transparent 60%);
+      animation: drift 10s ease-in-out infinite alternate;
+      filter: drop-shadow(0 0 10px rgba(157,255,191,.15));
+    }
+    @keyframes drift{
+      from{ transform: translateY(0px); }
+      to{ transform: translateY(-10px); }
+    }
 
-/* 🌸 FLOWERS */
-.footer{
-  position:fixed;
-  bottom:0;
-  width:100%;
-  display:flex;
-  justify-content:space-around;
-}
-.flower{
-  width:50px;
-  height:50px;
-  background:radial-gradient(circle,pink,transparent);
-  transform:translateY(30px);
-  transition:.3s;
-}
-.flower:hover{
-  transform:translateY(5px) scale(1.1);
-}
+    /* 🌿 Side vines (stronger & more “vines” looking) */
+    .vine{
+      position:fixed; top:-20px; bottom:-20px;
+      width:170px;
+      pointer-events:none;
+      opacity:.72;
+      filter: drop-shadow(0 12px 22px var(--shadow));
+      z-index:2;
+    }
+    .vine.left{ left:-50px; transform: rotate(-2deg); }
+    .vine.right{ right:-50px; transform: rotate(2deg) scaleX(-1); }
 
-/* 🧚 FAIRY DECOR (CORNERS) */
-.decor{
-  position:fixed;
-  width:120px;
-  opacity:.7;
-  pointer-events:none;
-}
-.tl{top:0;left:0;}
-.tr{top:0;right:0;transform:scaleX(-1);}
-.bl{bottom:0;left:0;transform:scaleY(-1);}
-.br{bottom:0;right:0;transform:scale(-1);}
-</style>
+    .vine::before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        /* clusters of “leaves” */
+        radial-gradient(18px 14px at 42% 10%, rgba(157,255,191,.42), transparent 65%),
+        radial-gradient(18px 14px at 58% 16%, rgba(157,255,191,.36), transparent 65%),
+        radial-gradient(18px 14px at 46% 24%, rgba(157,255,191,.34), transparent 65%),
+        radial-gradient(18px 14px at 60% 34%, rgba(157,255,191,.40), transparent 65%),
+        radial-gradient(18px 14px at 44% 44%, rgba(157,255,191,.33), transparent 65%),
+        radial-gradient(18px 14px at 60% 54%, rgba(157,255,191,.38), transparent 65%),
+        radial-gradient(18px 14px at 44% 64%, rgba(157,255,191,.30), transparent 65%),
+        radial-gradient(18px 14px at 60% 76%, rgba(157,255,191,.35), transparent 65%),
+        radial-gradient(18px 14px at 46% 88%, rgba(157,255,191,.28), transparent 65%),
+
+        /* faint vine haze */
+        linear-gradient(180deg, transparent, rgba(157,255,191,.22), transparent);
+      mask: linear-gradient(90deg, transparent 0 18%, #000 30% 70%, transparent 82% 100%);
+    }
+    .vine::after{
+      content:"";
+      position:absolute;
+      left:56%; top:0; bottom:0;
+      width:3px;
+      background: linear-gradient(180deg, rgba(157,255,191,.0), rgba(157,255,191,.55), rgba(157,255,191,.0));
+      border-radius:999px;
+      opacity:.8;
+    }
+
+    /* 🌿 Top/Bottom vine bands (extra “more vines”) */
+    .vineband{
+      position:fixed; left:0; right:0;
+      height:70px;
+      pointer-events:none;
+      z-index:2;
+      opacity:.55;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
+      background:
+        radial-gradient(16px 12px at 6% 55%, rgba(157,255,191,.35), transparent 62%),
+        radial-gradient(16px 12px at 14% 35%, rgba(157,255,191,.28), transparent 62%),
+        radial-gradient(16px 12px at 22% 60%, rgba(157,255,191,.32), transparent 62%),
+        radial-gradient(16px 12px at 34% 40%, rgba(157,255,191,.30), transparent 62%),
+        radial-gradient(16px 12px at 46% 62%, rgba(157,255,191,.34), transparent 62%),
+        radial-gradient(16px 12px at 58% 38%, rgba(157,255,191,.30), transparent 62%),
+        radial-gradient(16px 12px at 70% 62%, rgba(157,255,191,.34), transparent 62%),
+        radial-gradient(16px 12px at 82% 40%, rgba(157,255,191,.30), transparent 62%),
+        radial-gradient(16px 12px at 94% 62%, rgba(157,255,191,.34), transparent 62%),
+        linear-gradient(90deg, transparent, rgba(157,255,191,.16), transparent);
+      mask: linear-gradient(180deg, #000 10%, transparent 80%);
+    }
+    .vineband.top{ top:0; }
+    .vineband.bottom{ bottom:0; transform: scaleY(-1); }
+
+    .wrap{
+      width:min(1050px, 92vw);
+      margin: 34px auto 64px;
+      position:relative;
+      z-index:3; /* above effects */
+    }
+
+    header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:18px;
+      padding: 18px 18px 0;
+    }
+
+    .brand{
+      display:flex; flex-direction:column;
+      gap:6px;
+      max-width: 720px;
+    }
+
+    .vines-title{
+      font-family: var(--titleFont);
+      font-weight: 800;
+      letter-spacing:.5px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height:1.05;
+      margin:0;
+      position:relative;
+      display:inline-block;
+      padding: 6px 10px 10px;
+      text-shadow: 0 12px 30px var(--shadow);
+    }
+
+    /* “Vines spelling out words” vibe — richer */
+    .vines-title::before,
+    .vines-title::after{
+      content:"";
+      position:absolute; left:-14px; right:-14px;
+      height:16px;
+      background:
+        radial-gradient(11px 10px at 4% 50%, rgba(157,255,191,.60), transparent 62%),
+        radial-gradient(11px 10px at 10% 30%, rgba(157,255,191,.42), transparent 62%),
+        radial-gradient(11px 10px at 18% 70%, rgba(157,255,191,.50), transparent 62%),
+        radial-gradient(11px 10px at 28% 35%, rgba(157,255,191,.48), transparent 62%),
+        radial-gradient(11px 10px at 40% 68%, rgba(157,255,191,.55), transparent 62%),
+        radial-gradient(11px 10px at 52% 40%, rgba(157,255,191,.48), transparent 62%),
+        radial-gradient(11px 10px at 64% 70%, rgba(157,255,191,.55), transparent 62%),
+        radial-gradient(11px 10px at 76% 35%, rgba(157,255,191,.48), transparent 62%),
+        radial-gradient(11px 10px at 88% 65%, rgba(157,255,191,.55), transparent 62%),
+        radial-gradient(11px 10px at 96% 35%, rgba(157,255,191,.46), transparent 62%),
+        linear-gradient(90deg, transparent, rgba(157,255,191,.18), transparent);
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
+      opacity:.8;
+      pointer-events:none;
+    }
+    .vines-title::before{ top:-12px; transform: rotate(-1deg); }
+    .vines-title::after{ bottom:-12px; transform: rotate(1deg); }
+
+    .tagline{
+      margin:0;
+      color:var(--muted);
+      font-size: 14.5px;
+      letter-spacing:.25px;
+    }
+
+    .controls{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      margin-top: 4px;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+    }
+
+    button{
+      appearance:none;
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      color:var(--ink);
+      padding: 10px 12px;
+      border-radius: 12px;
+      cursor:pointer;
+      font-weight: 650;
+      letter-spacing:.2px;
+      box-shadow: 0 14px 30px var(--shadow);
+      transition: transform .12s ease, border-color .12s ease, filter .12s ease;
+      user-select:none;
+    }
+    button:hover{ transform: translateY(-1px); border-color: rgba(157,255,191,.35); filter: brightness(1.05); }
+    button:active{ transform: translateY(1px) scale(.99); }
+
+    main{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 16px;
+      margin-top: 16px;
+      padding: 18px;
+    }
+    @media (max-width: 920px){
+      main{ grid-template-columns: 1fr; }
+      header{ flex-direction:column; align-items:flex-start; }
+      .controls{ justify-content:flex-start; }
+    }
+
+    .card{
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, var(--panel), var(--panel2));
+      border-radius: 18px;
+      box-shadow: 0 22px 60px rgba(0,0,0,.35);
+      overflow:hidden;
+      position:relative;
+    }
+
+    /* 🌿 VINE FRAME AROUND TEXT (no PNG needed) */
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:10px;
+      border-radius: 14px;
+      pointer-events:none;
+      opacity:.95;
+      background:
+        /* corner leaf clusters */
+        radial-gradient(18px 14px at 6% 10%, rgba(157,255,191,.42), transparent 65%),
+        radial-gradient(18px 14px at 14% 6%, rgba(157,255,191,.30), transparent 65%),
+        radial-gradient(18px 14px at 86% 8%, rgba(157,255,191,.36), transparent 65%),
+        radial-gradient(18px 14px at 94% 12%, rgba(157,255,191,.30), transparent 65%),
+        radial-gradient(18px 14px at 8% 90%, rgba(157,255,191,.36), transparent 65%),
+        radial-gradient(18px 14px at 14% 94%, rgba(157,255,191,.28), transparent 65%),
+        radial-gradient(18px 14px at 88% 92%, rgba(157,255,191,.36), transparent 65%),
+        radial-gradient(18px 14px at 94% 88%, rgba(157,255,191,.28), transparent 65%),
+
+        /* thin vine lines around edges */
+        linear-gradient(90deg, rgba(157,255,191,.22), rgba(157,255,191,.05), rgba(157,255,191,.22)) top/100% 2px no-repeat,
+        linear-gradient(90deg, rgba(157,255,191,.18), rgba(157,255,191,.04), rgba(157,255,191,.18)) bottom/100% 2px no-repeat,
+        linear-gradient(180deg, rgba(157,255,191,.18), rgba(157,255,191,.04), rgba(157,255,191,.18)) left/2px 100% no-repeat,
+        linear-gradient(180deg, rgba(157,255,191,.18), rgba(157,255,191,.04), rgba(157,255,191,.18)) right/2px 100% no-repeat;
+
+      filter: drop-shadow(0 0 12px rgba(157,255,191,.10));
+    }
+
+    .card h2{
+      margin:0;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      font-family: var(--titleFont);
+      letter-spacing:.35px;
+      font-size: 18px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .card .body{ padding: 14px 16px 16px; position:relative; z-index:1; }
+
+    label{
+      display:block;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 10px 0 6px;
+    }
+
+    input, select, textarea{
+      width:100%;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.18);
+      color: var(--ink);
+      padding: 11px 12px;
+      border-radius: 12px;
+      outline:none;
+      transition: border-color .15s ease, transform .12s ease;
+    }
+    input:focus, select:focus, textarea:focus{
+      border-color: rgba(157,255,191,.42);
+      box-shadow: 0 0 0 3px rgba(157,255,191,.10);
+    }
+
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 520px){
+      .grid2{ grid-template-columns: 1fr; }
+    }
+
+    .hint{
+      margin: 8px 0 0;
+      color: rgba(185,217,197,.85);
+      font-size: 12.5px;
+      line-height: 1.35;
+    }
+
+    .cta{
+      display:flex;
+      gap:10px;
+      margin-top: 12px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .result{
+      padding: 14px 16px 16px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      position:relative;
+      z-index:1;
+    }
+    .matchTitle{
+      font-family: var(--titleFont);
+      font-size: 22px;
+      margin:0;
+      letter-spacing:.3px;
+    }
+    .scoreRow{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
+    .bar{
+      flex: 1 1 220px;
+      height: 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.20);
+      overflow:hidden;
+      position:relative;
+    }
+    .bar > span{
+      display:block; height:100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      filter: drop-shadow(0 10px 14px rgba(157,255,191,.18));
+      transition: width .45s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .profile{
+      border:1px dashed rgba(236,255,242,.22);
+      border-radius: 14px;
+      padding: 12px 12px;
+      background: rgba(0,0,0,.16);
+    }
+    .profile p{
+      margin: 6px 0;
+      color: rgba(236,255,242,.92);
+      line-height: 1.45;
+    }
+    .profile .muted{
+      color: rgba(185,217,197,.9);
+      font-size: 13px;
+    }
+
+    /* Lock + key micro decoration */
+    .lockline{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 16px 0;
+      color: rgba(185,217,197,.88);
+      font-size: 12.5px;
+    }
+    .lockIcon{
+      width: 16px; height: 16px;
+      border: 1px solid rgba(255,212,138,.45);
+      border-radius: 4px;
+      position: relative;
+      box-shadow: 0 12px 18px rgba(0,0,0,.35);
+    }
+    .lockIcon::before{
+      content:"";
+      position:absolute;
+      left: 3px; right: 3px;
+      top: -6px; height: 8px;
+      border: 1px solid rgba(255,212,138,.45);
+      border-bottom:none;
+      border-radius: 10px 10px 0 0;
+      opacity:.9;
+    }
+    .keyDot{
+      width: 7px; height: 7px;
+      border-radius: 999px;
+      background: rgba(255,212,138,.8);
+      box-shadow: 0 0 22px rgba(255,212,138,.25);
+    }
+
+    /* Blooming footer flowers */
+    .footerFlowers{
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      height: 120px;
+      pointer-events:none;
+      opacity:.95;
+      filter: drop-shadow(0 -14px 30px rgba(0,0,0,.45));
+      z-index:2;
+    }
+    .petalRow{
+      position:absolute; left:0; right:0; bottom:-22px;
+      display:flex;
+      justify-content:space-evenly;
+      align-items:flex-end;
+      gap: 10px;
+    }
+    .flower{
+      pointer-events:auto;
+      width: 56px; height: 56px;
+      border-radius: 16px;
+      border:1px solid rgba(236,255,242,.14);
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,209,241,.55), transparent 55%),
+        radial-gradient(circle at 70% 40%, rgba(157,255,191,.55), transparent 55%),
+        radial-gradient(circle at 45% 70%, rgba(255,212,138,.45), transparent 58%),
+        rgba(0,0,0,.18);
+      transform: translateY(26px) scale(.92);
+      transition: transform .22s ease, filter .22s ease;
+      filter: saturate(1.05);
+    }
+    .flower:hover{
+      transform: translateY(4px) scale(1.05);
+      filter: saturate(1.25) brightness(1.1);
+    }
+
+    .tiny{
+      font-size: 12px; color: rgba(185,217,197,.85);
+      margin: 0;
+    }
+    .divider{
+      height:1px;
+      background: var(--line);
+      margin: 12px 0;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(236,255,242,.14);
+      background: rgba(0,0,0,.18);
+      color: rgba(236,255,242,.92);
+      font-size: 12.5px;
+      width: fit-content;
+    }
+    .spark{
+      width: 8px; height: 8px; border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 18px rgba(157,255,191,.25);
+    }
+
+    a{ color: var(--accent); }
+  </style>
 </head>
-
 <body>
+  <div class="fireflies" aria-hidden="true"></div>
+  <div class="vineband top" aria-hidden="true"></div>
+  <div class="vine left" aria-hidden="true"></div>
+  <div class="vine right" aria-hidden="true"></div>
+  <div class="vineband bottom" aria-hidden="true"></div>
 
-<h1>sky’s secret garden</h1>
-<p style="text-align:center;">find ur destiny if ur brave enough</p>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <h1 class="vines-title">sky’s secret garden</h1>
+        <p class="tagline">find ur destiny if ur brave enough</p>
+        <div class="lockline">
+          <span class="lockIcon" aria-hidden="true"></span>
+          <span class="keyDot" aria-hidden="true"></span>
+          <span>choose a key. the garden chooses back.</span>
+        </div>
+      </div>
 
-<!-- 🧚 FAIRIES -->
-<img class="decor tl" src="https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif">
-<img class="decor tr" src="https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif">
-<img class="decor bl" src="https://media.giphy.com/media/l0HlQ7LRalQqdWfao/giphy.gif">
-<img class="decor br" src="https://media.giphy.com/media/l0HlQ7LRalQqdWfao/giphy.gif">
+      <div class="controls">
+        <button id="soundBtn" type="button">🔊 bird chirps</button>
+        <button id="rerollBtn" type="button">🎲 reroll match</button>
+      </div>
+    </header>
 
-<div class="card">
+    <main>
+      <!-- FORM -->
+      <section class="card">
+        <h2>🗝️ your key</h2>
+        <div class="body">
+          <div class="grid2">
+            <div>
+              <label for="userName">Type your name / codename</label>
+              <input id="userName" placeholder="ex: Sky / Ever / Doll / Detective" maxlength="36" />
+              <p class="hint">This tweaks your result text + makes it feel like *yours*.</p>
+            </div>
+            <div>
+              <label for="toneName">Type-name option (your vibe label)</label>
+              <input id="toneName" placeholder="ex: Moonlit Menace / Velvet Threat" maxlength="36" />
+              <p class="hint">Optional. This becomes your “garden title.”</p>
+            </div>
+          </div>
 
-<input id="name" placeholder="your name">
+          <div class="divider"></div>
 
-<select id="myArch"></select>
-<select id="likeArch"></select>
+          <div class="grid2">
+            <div>
+              <label for="myArch">Your archetype</label>
+              <select id="myArch"></select>
+            </div>
+            <div>
+              <label for="likeArch">Archetype you’re drawn to</label>
+              <select id="likeArch"></select>
+            </div>
+          </div>
 
-<button onclick="match()">find destiny</button>
+          <div class="grid2">
+            <div>
+              <label for="characterPool">Your suitor pool</label>
+              <select id="characterPool"></select>
+              <p class="hint">Pick “All” or narrow to a vibe set (we’ll add more sets later).</p>
+            </div>
+            <div>
+              <label for="riskLevel">Bravery level</label>
+              <select id="riskLevel">
+                <option value="low">Low (soft fate)</option>
+                <option value="mid" selected>Mid (spicy fate)</option>
+                <option value="high">High (no regrets)</option>
+              </select>
+              <p class="hint">Higher = more dramatic matching bias.</p>
+            </div>
+          </div>
 
-</div>
+          <div class="cta">
+            <button id="matchBtn" type="button">🌿 find my destiny</button>
+            <span class="badge"><span class="spark"></span> secret garden build: v1</span>
+          </div>
 
-<div class="card" id="result">
-waiting for fate...
-</div>
+          <p class="hint">
+            Next step (later): we’ll add individual character profile pages that preserve your exact lines.
+            For now, the profiles live inside the match card.
+          </p>
+        </div>
+      </section>
 
-<div class="footer">
-<div class="flower"></div>
-<div class="flower"></div>
-<div class="flower"></div>
-</div>
+      <!-- RESULT -->
+      <aside class="card">
+        <h2>🌙 your match</h2>
+        <div class="result" id="result">
+          <p class="tiny">Your destiny appears here. Pick your key first.</p>
+        </div>
+      </aside>
+    </main>
+  </div>
 
-<script>
+  <!-- Blooming flower footer -->
+  <div class="footerFlowers" aria-hidden="true">
+    <div class="petalRow">
+      <div class="flower"></div><div class="flower"></div><div class="flower"></div><div class="flower"></div>
+      <div class="flower"></div><div class="flower"></div><div class="flower"></div><div class="flower"></div>
+      <div class="flower"></div><div class="flower"></div>
+    </div>
+  </div>
 
-const archetypes = [
-"Emotionally unavailable poet",
-"Star-crossed detective",
-"Runaway royalty",
-"Time traveler",
-"Dream thief",
-"Cursed prodigy",
-"Angel"
-];
+  <!-- Audio: must be started by user gesture -->
+  <audio id="birds" preload="auto" loop>
+    <source src="assets/birds.mp3" type="audio/mpeg" />
+  </audio>
 
-const characters = [
-"MJ","Chun Li","Wednesday","Frieren","Catwoman","Black Widow","Zelda"
-];
+  <script>
+    // ====== 1) ARCHETYPES (yours + extra “guys wanna be that” types) ======
+    const archetypes = [
+      "Emotionally unavailable poet",
+      "Star-crossed detective",
+      "Runaway royalty",
+      "Time traveler",
+      "Dream thief",
+      "Cursed prodigy",
+      "Angel",
+      "Gentle villain with a code",
+      "War-torn knight of flowers",
+      "Moonlit swordsman",
+      "Chaotic heartthrob strategist",
+      "Soft-spoken monster (protective)",
+      "Forbidden librarian sorcerer",
+      "Gold-hand gambler (lucky curse)",
+      "The last heir of a dead empire"
+    ];
 
-archetypes.forEach(a=>{
-  myArch.add(new Option(a,a));
-  likeArch.add(new Option(a,a));
-});
+    // ====== 2) CHARACTERS (your list + popular additions) ======
+    const characters = [
+      {
+        id:"mj", name:"MJ", source:"Spider-Man",
+        desc:"The girl with a brave mouth and a soft core — sees through masks, loves anyway.",
+        tags:["witty","grounded","ride-or-die"],
+        favored:["Star-crossed detective","Emotionally unavailable poet","Chaotic heartthrob strategist","Gentle villain with a code"],
+        theme:{ bgImage:"", accent:"#ff8fb1", accent2:"#9dffbf", bg1:"#0a0d12", bg2:"#140b14" }
+      },
+      {
+        id:"chunli", name:"Chun-Li", source:"Street Fighter",
+        desc:"Discipline, legs of doom, and a heart that still believes in justice.",
+        tags:["strong","loyal","commanding"],
+        favored:["War-torn knight of flowers","Cursed prodigy","Star-crossed detective","The last heir of a dead empire"],
+        theme:{ bgImage:"", accent:"#8fd3ff", accent2:"#ffd48a", bg1:"#07101a", bg2:"#06121b" }
+      },
+      {
+        id:"wednesday", name:"Wednesday Addams", source:"Netflix / Addams",
+        desc:"Deadpan devotion. If she likes you, it’s basically a blood pact.",
+        tags:["goth","brutal honesty","mystery"],
+        favored:["Cursed prodigy","Dream thief","Forbidden librarian sorcerer","Soft-spoken monster (protective)"],
+        theme:{ bgImage:"", accent:"#b8b8ff", accent2:"#ff5c7a", bg1:"#05060a", bg2:"#0c0b12" }
+      },
+      {
+        id:"frieren", name:"Frieren", source:"Frieren",
+        desc:"Quiet immortality. Gentle power. The kind of love that arrives late — and stays forever.",
+        tags:["calm","ancient","tender"],
+        favored:["Time traveler","Angel","Forbidden librarian sorcerer","Moonlit swordsman"],
+        theme:{ bgImage:"", accent:"#9dffbf", accent2:"#caa9ff", bg1:"#07120f", bg2:"#06131b" }
+      },
+      {
+        id:"laracroft", name:"Lara Croft", source:"Tomb Raider",
+        desc:"Danger looks good on her. She’ll steal relics *and* your composure.",
+        tags:["adventure","competent","bold"],
+        favored:["Star-crossed detective","Time traveler","Gold-hand gambler (lucky curse)","Chaotic heartthrob strategist"],
+        theme:{ bgImage:"", accent:"#ffd48a", accent2:"#9dffbf", bg1:"#0b120b", bg2:"#0f1a10" }
+      },
+      {
+        id:"catwoman", name:"Catwoman", source:"DC",
+        desc:"Flirtation as a weapon. Affection as a heist. She never asks twice.",
+        tags:["seductive","rogue","danger"],
+        favored:["Dream thief","Gentle villain with a code","Gold-hand gambler (lucky curse)","Emotionally unavailable poet"],
+        theme:{ bgImage:"", accent:"#ffd1f1", accent2:"#b8b8ff", bg1:"#07070a", bg2:"#120b12" }
+      },
+      {
+        id:"blackwidow", name:"Black Widow", source:"Marvel",
+        desc:"Reads you in silence. Saves you anyway. Then dares you to keep up.",
+        tags:["spy","deadly","loyal"],
+        favored:["Star-crossed detective","Cursed prodigy","War-torn knight of flowers","The last heir of a dead empire"],
+        theme:{ bgImage:"", accent:"#ff5c7a", accent2:"#ffd48a", bg1:"#0a0507", bg2:"#12060b" }
+      },
+      {
+        id:"daenerys", name:"Daenerys Targaryen", source:"Game of Thrones",
+        desc:"Power, tenderness, fire. Love her and you’re suddenly part of history.",
+        tags:["royalty","intense","mythic"],
+        favored:["Runaway royalty","The last heir of a dead empire","Angel","War-torn knight of flowers"],
+        theme:{ bgImage:"", accent:"#caa9ff", accent2:"#9dffbf", bg1:"#050814", bg2:"#0b1230" }
+      },
+      {
+        id:"zelda", name:"Princess Zelda", source:"The Legend of Zelda",
+        desc:"Grace with a blade hidden inside it. Destiny-coded. Puzzle-brained.",
+        tags:["noble","mystic","wise"],
+        favored:["Runaway royalty","Forbidden librarian sorcerer","Time traveler","Star-crossed detective"],
+        theme:{ bgImage:"", accent:"#9dffbf", accent2:"#ffd48a", bg1:"#061311", bg2:"#08201b" }
+      },
+      {
+        id:"harley", name:"Harley Quinn", source:"DC",
+        desc:"Chaos in glitter. Loyal like a pitbull. Laughs while the world burns.",
+        tags:["chaos","playful","danger-cute"],
+        favored:["Chaotic heartthrob strategist","Gentle villain with a code","Dream thief","Gold-hand gambler (lucky curse)"],
+        theme:{ bgImage:"", accent:"#ff5c7a", accent2:"#9dffbf", bg1:"#0f050b", bg2:"#12070f" }
+      }
+    ];
 
-function match(){
-  let c = characters[Math.floor(Math.random()*characters.length)];
-  let score = Math.floor(Math.random()*50)+50;
+    const pools = [
+      { id:"all", name:"All", filter: () => true },
+      { id:"dark", name:"Dark + Dangerous", filter: c => ["Wednesday Addams","Catwoman","Black Widow","Harley Quinn"].includes(c.name) },
+      { id:"myth", name:"Mythic + Destiny", filter: c => ["Frieren","Daenerys Targaryen","Princess Zelda"].includes(c.name) },
+      { id:"action", name:"Action Icons", filter: c => ["Chun-Li","Lara Croft","Black Widow"].includes(c.name) }
+    ];
 
-  result.innerHTML = `
-    <h2>${c}</h2>
-    <p>${score}% compatibility</p>
-  `;
-}
+    // ====== 3) COMPATIBILITY LOGIC ======
+    function clamp(n,min,max){ return Math.max(min, Math.min(max, n)); }
 
-</script>
+    function baseSynergy(myA, likeA){
+      let score = 52;
+      if (myA === likeA) score += 10;
 
+      const pairs = new Map([
+        ["Emotionally unavailable poet|Angel", 18],
+        ["Angel|Emotionally unavailable poet", 12],
+        ["Star-crossed detective|Dream thief", 16],
+        ["Dream thief|Star-crossed detective", 12],
+        ["Runaway royalty|War-torn knight of flowers", 18],
+        ["War-torn knight of flowers|Runaway royalty", 14],
+        ["Time traveler|Forbidden librarian sorcerer", 16],
+        ["Forbidden librarian sorcerer|Time traveler", 13],
+        ["Cursed prodigy|Soft-spoken monster (protective)", 17],
+        ["Soft-spoken monster (protective)|Cursed prodigy", 12],
+        ["Gentle villain with a code|Angel", 12],
+        ["Angel|Gentle villain with a code", 14],
+        ["Gold-hand gambler (lucky curse)|Runaway royalty", 14],
+        ["Runaway royalty|Gold-hand gambler (lucky curse)", 12],
+      ]);
+
+      const key = `${myA}|${likeA}`;
+      if (pairs.has(key)) score += pairs.get(key);
+
+      const drama = new Set(["Dream thief","Cursed prodigy","Gentle villain with a code","The last heir of a dead empire"]);
+      if (drama.has(myA)) score += 4;
+      if (drama.has(likeA)) score += 4;
+
+      return clamp(score, 0, 100);
+    }
+
+    function characterAffinity(character, myA, likeA){
+      let s = 0;
+      if (character.favored.includes(myA)) s += 10;
+      if (character.favored.includes(likeA)) s += 16;
+      if (likeA.includes("detective") && character.tags.includes("spy")) s += 6;
+      if (likeA.includes("royalty") && character.tags.includes("royalty")) s += 6;
+      if (likeA.includes("Dream thief") && character.tags.includes("mystery")) s += 6;
+      return s;
+    }
+
+    function braveryBias(riskLevel){
+      if (riskLevel === "low") return -4;
+      if (riskLevel === "high") return 6;
+      return 2;
+    }
+
+    function pickMatch(candidates, myA, likeA, riskLevel){
+      const weights = candidates.map(c => {
+        const w = 10 + characterAffinity(c, myA, likeA) + braveryBias(riskLevel) + Math.random()*8;
+        return Math.max(1, w);
+      });
+      const sum = weights.reduce((a,b)=>a+b,0);
+      let r = Math.random() * sum;
+      for (let i=0; i<candidates.length; i++){
+        r -= weights[i];
+        if (r <= 0) return candidates[i];
+      }
+      return candidates[candidates.length-1];
+    }
+
+    function computeScore(character, myA, likeA, riskLevel){
+      let score = baseSynergy(myA, likeA);
+      score += characterAffinity(character, myA, likeA);
+      score += braveryBias(riskLevel);
+      score += (Math.random()*6 - 3);
+      return clamp(Math.round(score), 0, 100);
+    }
+
+    // ====== 4) UI WIRING ======
+    const myArchEl = document.getElementById("myArch");
+    const likeArchEl = document.getElementById("likeArch");
+    const poolEl = document.getElementById("characterPool");
+    const resultEl = document.getElementById("result");
+
+    const nameEl = document.getElementById("userName");
+    const toneEl = document.getElementById("toneName");
+    const riskEl = document.getElementById("riskLevel");
+
+    const matchBtn = document.getElementById("matchBtn");
+    const rerollBtn = document.getElementById("rerollBtn");
+    const soundBtn = document.getElementById("soundBtn");
+    const birds = document.getElementById("birds");
+
+    function init(){
+      archetypes.forEach(a=>{
+        myArchEl.add(new Option(a,a));
+        likeArchEl.add(new Option(a,a));
+      });
+      myArchEl.value = "Star-crossed detective";
+      likeArchEl.value = "Dream thief";
+
+      pools.forEach(p => poolEl.add(new Option(p.name, p.id)));
+      poolEl.value = "all";
+
+      renderEmpty();
+    }
+
+    function eligibleCharacters(){
+      const pool = pools.find(p => p.id === poolEl.value) || pools[0];
+      return characters.filter(pool.filter);
+    }
+
+    function renderEmpty(){
+      resultEl.innerHTML = `
+        <p class="tiny">Pick your archetypes, then hit <b>find my destiny</b>.</p>
+        <div class="profile">
+          <p class="muted">Garden rule: the match reacts to <i>who you are</i> + <i>who you crave</i>.</p>
+        </div>
+      `;
+    }
+
+    function applyTheme(theme){
+      const r = document.documentElement.style;
+      r.setProperty("--accent", theme.accent || "#9dffbf");
+      r.setProperty("--accent2", theme.accent2 || "#ffd1f1");
+      r.setProperty("--bg1", theme.bg1 || "#07110c");
+      r.setProperty("--bg2", theme.bg2 || "#0b1a12");
+
+      if (theme.bgImage && theme.bgImage.trim().length){
+        r.setProperty("--bgImage", `url('${theme.bgImage}')`);
+      } else {
+        r.setProperty("--bgImage", "none");
+      }
+    }
+
+    function makeMatch(isReroll=false){
+      const myA = myArchEl.value;
+      const likeA = likeArchEl.value;
+      const risk = riskEl.value;
+
+      const cands = eligibleCharacters();
+      if (!cands.length){
+        resultEl.innerHTML = `<p class="tiny">No characters in this pool yet. Pick “All”.</p>`;
+        return;
+      }
+
+      const pick = pickMatch(cands, myA, likeA, risk);
+      const score = computeScore(pick, myA, likeA, risk);
+
+      const userName = (nameEl.value || "Traveler").trim();
+      const toneName = (toneEl.value || "Keybearer").trim();
+
+      applyTheme(pick.theme || {});
+
+      const verdict = score >= 85 ? "FATED."
+                   : score >= 70 ? "DANGEROUSLY GOOD."
+                   : score >= 55 ? "PROMISING."
+                   : score >= 40 ? "COMPLICATED."
+                   : "CHAOTIC (but hot).";
+
+      const flavor = makeFlavorLine(userName, toneName, myA, likeA, pick, score);
+
+      resultEl.innerHTML = `
+        <p class="tiny">${isReroll ? "rerolled fate. the garden is smirking." : "a lock clicked somewhere."}</p>
+        <h3 class="matchTitle">${escapeHtml(pick.name)} <span style="opacity:.8;font-size:14px;color:var(--muted)">(${escapeHtml(pick.source)})</span></h3>
+
+        <div class="scoreRow">
+          <span><b>${score}%</b> compatibility — <b>${verdict}</b></span>
+          <div class="bar" aria-label="compatibility bar"><span style="width:${score}%"></span></div>
+        </div>
+
+        <div class="profile">
+          <p class="muted"><b>${escapeHtml(userName)}</b>, titled: <b>${escapeHtml(toneName)}</b></p>
+          <p class="muted">You are: <b>${escapeHtml(myA)}</b></p>
+          <p class="muted">You crave: <b>${escapeHtml(likeA)}</b></p>
+          <div class="divider"></div>
+          <p><b>Match read:</b> ${escapeHtml(pick.desc)}</p>
+          <p class="muted"><b>Tags:</b> ${pick.tags.map(t=>`#${escapeHtml(t)}`).join(" ")}</p>
+          <div class="divider"></div>
+          <p>${escapeHtml(flavor)}</p>
+          <p class="muted">Next upgrade: your preserved custom lines + full character profile pages.</p>
+        </div>
+      `;
+    }
+
+    function makeFlavorLine(userName, toneName, myA, likeA, pick, score){
+      const openers = [
+        `The garden watched you enter and whispered: “${toneName}…”`,
+        `A vine curled around the lock like it recognized you.`,
+        `Somewhere, a key turned itself. You felt it in your ribs.`,
+        `A bird chirped like it knew your business. Rude.`
+      ];
+      const o = openers[Math.floor(Math.random()*openers.length)];
+
+      const spice = score >= 80
+        ? `This one doesn’t just match you — it *claims a chapter* in your story.`
+        : score >= 60
+        ? `This is the kind of match that grows if you don’t flinch.`
+        : `This could be a beautiful disaster. If you like your romance with teeth.`;
+
+      return `${o} ${spice} (${userName} + ${pick.name}: lock meets key.)`;
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    async function toggleBirds(){
+      try{
+        if (birds.paused){
+          await birds.play();
+          soundBtn.textContent = "🔊 bird chirps: on";
+        } else {
+          birds.pause();
+          soundBtn.textContent = "🔇 bird chirps: off";
+        }
+      } catch (e){
+        alert("Bird audio didn’t load. Later we’ll add assets/birds.mp3 to your repo.");
+      }
+    }
+
+    matchBtn.addEventListener("click", () => makeMatch(false));
+    rerollBtn.addEventListener("click", () => makeMatch(true));
+    soundBtn.addEventListener("click", toggleBirds);
+
+    init();
+  </script>
 </body>
 </html>
