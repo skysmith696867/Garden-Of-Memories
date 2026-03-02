@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sky’s Secret Garden</title>
+
+<style>
+:root{
+  --bg1:#07110c;
+  --bg2:#0b1a12;
+  --ink:#ecfff2;
+  --muted:#b9d9c5;
+  --accent:#9dffbf;
+  --accent2:#ffd1f1;
+
+  /* 🌿 VINE BORDER */
+  --vineBorder: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='none' stroke='%239dffbf' stroke-opacity='.5' stroke-width='3'%3E%3Cpath d='M10 60c25-35 45 35 70 0 12-16 22-8 30 0'/%3E%3C/g%3E%3Cg fill='%239dffbf' fill-opacity='.3'%3E%3Cellipse cx='28' cy='54' rx='6' ry='3'/%3E%3Cellipse cx='66' cy='64' rx='6' ry='3'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family: system-ui;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 20% 10%, rgba(157,255,191,.15), transparent),
+    radial-gradient(circle at 80% 40%, rgba(255,209,241,.1), transparent),
+    linear-gradient(180deg,var(--bg1),var(--bg2));
+}
+
+/* ✨ TITLE */
+h1{
+  font-family: serif;
+  font-size:40px;
+  margin:0;
+}
+
+header{
+  padding:20px;
+}
+
+/* 🌿 CARD + VINE FRAME */
+.card{
+  margin:20px;
+  padding:20px;
+  background:rgba(0,0,0,.2);
+  border-radius:16px;
+
+  border:16px solid transparent;
+  border-image-source: var(--vineBorder);
+  border-image-slice: 30;
+  border-image-repeat: round;
+}
+
+/* INPUTS */
+input, select{
+  width:100%;
+  padding:10px;
+  margin-top:5px;
+  margin-bottom:15px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.2);
+  background:rgba(0,0,0,.2);
+  color:white;
+}
+
+/* BUTTON */
+button{
+  padding:10px 14px;
+  border-radius:10px;
+  border:none;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  cursor:pointer;
+}
+
+/* 🌸 FLOWERS */
+.footer{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  display:flex;
+  justify-content:space-around;
+}
+
+.flower{
+  width:50px;
+  height:50px;
+  background:radial-gradient(circle, pink, transparent);
+  transform:translateY(30px);
+  transition:.3s;
+}
+
+.flower:hover{
+  transform:translateY(5px) scale(1.1);
+}
+
+/* 🧚 OPTIONAL FAIRY STICKERS (OFF BY DEFAULT) */
+.fairy{
+  position:fixed;
+  width:80px;
+  opacity:.6;
+  pointer-events:none;
+  display:none; /* OFF */
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>sky’s secret garden</h1>
+  <p>find ur destiny if ur brave enough</p>
+</header>
+
+<!-- 🌿 FORM -->
+<div class="card">
+  <h2>your key</h2>
+
+  <label>Name</label>
+  <input id="name">
+
+  <label>Your archetype</label>
+  <select id="myArch"></select>
+
+  <label>What you want</label>
+  <select id="likeArch"></select>
+
+  <button onclick="match()">find my destiny</button>
+</div>
+
+<!-- 🌙 RESULT -->
+<div class="card" id="result">
+  your match appears here
+</div>
+
+<!-- 🌸 FLOWERS -->
+<div class="footer">
+  <div class="flower"></div>
+  <div class="flower"></div>
+  <div class="flower"></div>
+  <div class="flower"></div>
+</div>
+
+<!-- 🧚 FAIRY STICKERS (ADD GIF LINKS LATER) -->
+<img class="fairy" id="f1">
+
+<script>
+
+/* ARCHETYPES */
+const archetypes = [
+"Emotionally unavailable poet",
+"Star-crossed detective",
+"Runaway royalty",
+"Time traveler",
+"Dream thief",
+"Cursed prodigy",
+"Angel"
+];
+
+/* CHARACTERS */
+const characters = [
+"MJ",
+"Chun Li",
+"Wednesday",
+"Frieren",
+"Lara Croft",
+"Catwoman",
+"Black Widow",
+"Daenerys",
+"Zelda",
+"Harley Quinn"
+];
+
+/* LOAD OPTIONS */
+archetypes.forEach(a=>{
+  myArch.add(new Option(a,a));
+  likeArch.add(new Option(a,a));
+});
+
+/* MATCH LOGIC */
+function match(){
+  let c = characters[Math.floor(Math.random()*characters.length)];
+  let score = Math.floor(Math.random()*50)+50;
+
+  result.innerHTML = `
+    <h2>${c}</h2>
+    <p>${score}% compatibility</p>
+  `;
+}
+
+</script>
+
+</body>
+</html>
