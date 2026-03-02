@@ -5,27 +5,33 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Sky’s Secret Garden</title>
   <meta name="description" content="Find ur destiny if ur brave enough" />
+
   <style>
     :root{
-      --bg1:#07110c;
+      --bg1:#06110c;
       --bg2:#0b1a12;
-      --panel: rgba(10, 18, 13, .70);
+
+      --panel: rgba(10, 18, 13, .68);
       --panel2: rgba(10, 18, 13, .50);
+
       --ink:#ecfff2;
       --muted:#b9d9c5;
       --line: rgba(236,255,242,.16);
+
       --accent:#9dffbf;
       --accent2:#ffd1f1;
       --gold:#ffd48a;
+
       --shadow: rgba(0,0,0,.45);
+
       --titleFont: ui-serif, "Georgia", "Times New Roman", serif;
       --bodyFont: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 
-      /* “skin” hooks that change per matched character */
+      /* character skin hooks */
       --heroGlow:
-        radial-gradient(900px 600px at 30% 20%, rgba(157,255,191,.22), transparent 62%),
-        radial-gradient(700px 500px at 70% 40%, rgba(255,209,241,.16), transparent 62%);
-
+        radial-gradient(900px 600px at 28% 18%, rgba(157,255,191,.22), transparent 62%),
+        radial-gradient(720px 520px at 72% 42%, rgba(255,209,241,.14), transparent 64%),
+        radial-gradient(900px 900px at 50% 105%, rgba(255,212,138,.10), transparent 60%);
       --bgImage: none;
     }
 
@@ -46,7 +52,7 @@
       overflow-x:hidden;
     }
 
-    /* Soft film-grain-ish */
+    /* soft grain + haze */
     body::before{
       content:"";
       position:fixed; inset:0;
@@ -54,68 +60,53 @@
       background:
         radial-gradient(circle at 20% 10%, rgba(255,255,255,.06), transparent 50%),
         radial-gradient(circle at 70% 40%, rgba(255,255,255,.05), transparent 55%),
-        radial-gradient(circle at 50% 90%, rgba(255,255,255,.04), transparent 60%);
+        radial-gradient(circle at 50% 90%, rgba(255,255,255,.04), transparent 60%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.018), rgba(255,255,255,.018) 1px, transparent 1px, transparent 3px);
       mix-blend-mode: overlay;
-      opacity:.55;
+      opacity:.50;
       z-index:0;
     }
 
-    /* ✨ Magic shimmer veil */
-    body::after{
-      content:"";
-      position:fixed; inset:0;
-      pointer-events:none;
-      background:
-        radial-gradient(circle at 30% 20%, rgba(157,255,191,.14), transparent 55%),
-        radial-gradient(circle at 70% 60%, rgba(255,209,241,.10), transparent 55%),
-        radial-gradient(circle at 50% 92%, rgba(255,212,138,.08), transparent 60%);
-      opacity:.75;
-      animation: shimmer 7s ease-in-out infinite alternate;
-      z-index:0;
-    }
-    @keyframes shimmer{
-      from{ opacity:.55; filter: blur(0px); }
-      to{ opacity:1; filter: blur(.4px); }
-    }
-
-    /* ✨ Firefly dots layer (subtle, non-annoying) */
-    .fireflies{
+    /* ✨ drifting sparkle veil (NOT gifs) */
+    .sparkleVeil{
       position:fixed; inset:0;
       pointer-events:none;
       z-index:1;
-      opacity:.65;
       background:
-        radial-gradient(2px 2px at 12% 22%, rgba(255,209,241,.9), transparent 60%),
-        radial-gradient(2px 2px at 28% 58%, rgba(157,255,191,.9), transparent 60%),
-        radial-gradient(2px 2px at 44% 30%, rgba(255,212,138,.85), transparent 60%),
-        radial-gradient(2px 2px at 62% 66%, rgba(157,255,191,.85), transparent 60%),
-        radial-gradient(2px 2px at 78% 40%, rgba(255,209,241,.85), transparent 60%),
-        radial-gradient(2px 2px at 86% 74%, rgba(255,212,138,.85), transparent 60%);
+        radial-gradient(2px 2px at 12% 22%, rgba(255,209,241,.95), transparent 60%),
+        radial-gradient(2px 2px at 28% 58%, rgba(157,255,191,.95), transparent 60%),
+        radial-gradient(2px 2px at 44% 30%, rgba(255,212,138,.92), transparent 60%),
+        radial-gradient(2px 2px at 62% 66%, rgba(157,255,191,.92), transparent 60%),
+        radial-gradient(2px 2px at 78% 40%, rgba(255,209,241,.92), transparent 60%),
+        radial-gradient(2px 2px at 86% 74%, rgba(255,212,138,.90), transparent 60%),
+        radial-gradient(1.5px 1.5px at 52% 18%, rgba(255,255,255,.85), transparent 60%),
+        radial-gradient(1.5px 1.5px at 36% 82%, rgba(255,255,255,.75), transparent 60%),
+        radial-gradient(1.5px 1.5px at 74% 88%, rgba(255,255,255,.70), transparent 60%);
+      opacity:.55;
+      filter: drop-shadow(0 0 12px rgba(157,255,191,.10));
       animation: drift 10s ease-in-out infinite alternate;
-      filter: drop-shadow(0 0 10px rgba(157,255,191,.15));
     }
     @keyframes drift{
       from{ transform: translateY(0px); }
-      to{ transform: translateY(-10px); }
+      to{ transform: translateY(-14px); }
     }
 
-    /* 🌿 Side vines (stronger & more “vines” looking) */
+    /* 🌿 vines on sides (no images) */
     .vine{
-      position:fixed; top:-20px; bottom:-20px;
+      position:fixed; top:-25px; bottom:-25px;
       width:170px;
       pointer-events:none;
       opacity:.72;
-      filter: drop-shadow(0 12px 22px var(--shadow));
+      filter: drop-shadow(0 14px 22px var(--shadow));
       z-index:2;
     }
-    .vine.left{ left:-50px; transform: rotate(-2deg); }
-    .vine.right{ right:-50px; transform: rotate(2deg) scaleX(-1); }
+    .vine.left{ left:-55px; transform: rotate(-2deg); }
+    .vine.right{ right:-55px; transform: rotate(2deg) scaleX(-1); }
 
     .vine::before{
       content:"";
       position:absolute; inset:0;
       background:
-        /* clusters of “leaves” */
         radial-gradient(18px 14px at 42% 10%, rgba(157,255,191,.42), transparent 65%),
         radial-gradient(18px 14px at 58% 16%, rgba(157,255,191,.36), transparent 65%),
         radial-gradient(18px 14px at 46% 24%, rgba(157,255,191,.34), transparent 65%),
@@ -125,8 +116,6 @@
         radial-gradient(18px 14px at 44% 64%, rgba(157,255,191,.30), transparent 65%),
         radial-gradient(18px 14px at 60% 76%, rgba(157,255,191,.35), transparent 65%),
         radial-gradient(18px 14px at 46% 88%, rgba(157,255,191,.28), transparent 65%),
-
-        /* faint vine haze */
         linear-gradient(180deg, transparent, rgba(157,255,191,.22), transparent);
       mask: linear-gradient(90deg, transparent 0 18%, #000 30% 70%, transparent 82% 100%);
     }
@@ -135,15 +124,15 @@
       position:absolute;
       left:56%; top:0; bottom:0;
       width:3px;
-      background: linear-gradient(180deg, rgba(157,255,191,.0), rgba(157,255,191,.55), rgba(157,255,191,.0));
+      background: linear-gradient(180deg, rgba(157,255,191,.0), rgba(157,255,191,.60), rgba(157,255,191,.0));
       border-radius:999px;
-      opacity:.8;
+      opacity:.85;
     }
 
-    /* 🌿 Top/Bottom vine bands (extra “more vines”) */
+    /* 🌿 subtle vine bands top/bottom */
     .vineband{
       position:fixed; left:0; right:0;
-      height:70px;
+      height:72px;
       pointer-events:none;
       z-index:2;
       opacity:.55;
@@ -166,9 +155,9 @@
 
     .wrap{
       width:min(1050px, 92vw);
-      margin: 34px auto 64px;
+      margin: 34px auto 78px;
       position:relative;
-      z-index:3; /* above effects */
+      z-index:3;
     }
 
     header{
@@ -181,47 +170,47 @@
 
     .brand{
       display:flex; flex-direction:column;
-      gap:6px;
-      max-width: 720px;
+      gap:8px;
+      max-width: 760px;
     }
 
     .vines-title{
       font-family: var(--titleFont);
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing:.5px;
-      font-size: clamp(28px, 4vw, 44px);
+      font-size: clamp(30px, 4.2vw, 48px);
       line-height:1.05;
       margin:0;
       position:relative;
       display:inline-block;
-      padding: 6px 10px 10px;
-      text-shadow: 0 12px 30px var(--shadow);
+      padding: 8px 12px 12px;
+      text-shadow: 0 14px 32px var(--shadow);
     }
 
-    /* “Vines spelling out words” vibe — richer */
+    /* vine “spell” around title */
     .vines-title::before,
     .vines-title::after{
       content:"";
-      position:absolute; left:-14px; right:-14px;
-      height:16px;
+      position:absolute; left:-16px; right:-16px;
+      height:18px;
       background:
-        radial-gradient(11px 10px at 4% 50%, rgba(157,255,191,.60), transparent 62%),
-        radial-gradient(11px 10px at 10% 30%, rgba(157,255,191,.42), transparent 62%),
-        radial-gradient(11px 10px at 18% 70%, rgba(157,255,191,.50), transparent 62%),
-        radial-gradient(11px 10px at 28% 35%, rgba(157,255,191,.48), transparent 62%),
-        radial-gradient(11px 10px at 40% 68%, rgba(157,255,191,.55), transparent 62%),
-        radial-gradient(11px 10px at 52% 40%, rgba(157,255,191,.48), transparent 62%),
-        radial-gradient(11px 10px at 64% 70%, rgba(157,255,191,.55), transparent 62%),
-        radial-gradient(11px 10px at 76% 35%, rgba(157,255,191,.48), transparent 62%),
-        radial-gradient(11px 10px at 88% 65%, rgba(157,255,191,.55), transparent 62%),
-        radial-gradient(11px 10px at 96% 35%, rgba(157,255,191,.46), transparent 62%),
+        radial-gradient(12px 10px at 4% 50%, rgba(157,255,191,.62), transparent 62%),
+        radial-gradient(12px 10px at 10% 30%, rgba(157,255,191,.44), transparent 62%),
+        radial-gradient(12px 10px at 18% 72%, rgba(157,255,191,.52), transparent 62%),
+        radial-gradient(12px 10px at 28% 35%, rgba(157,255,191,.50), transparent 62%),
+        radial-gradient(12px 10px at 40% 68%, rgba(157,255,191,.58), transparent 62%),
+        radial-gradient(12px 10px at 52% 40%, rgba(157,255,191,.50), transparent 62%),
+        radial-gradient(12px 10px at 64% 70%, rgba(157,255,191,.58), transparent 62%),
+        radial-gradient(12px 10px at 76% 35%, rgba(157,255,191,.50), transparent 62%),
+        radial-gradient(12px 10px at 88% 65%, rgba(157,255,191,.58), transparent 62%),
+        radial-gradient(12px 10px at 96% 35%, rgba(157,255,191,.46), transparent 62%),
         linear-gradient(90deg, transparent, rgba(157,255,191,.18), transparent);
       filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
-      opacity:.8;
+      opacity:.85;
       pointer-events:none;
     }
-    .vines-title::before{ top:-12px; transform: rotate(-1deg); }
-    .vines-title::after{ bottom:-12px; transform: rotate(1deg); }
+    .vines-title::before{ top:-14px; transform: rotate(-1deg); }
+    .vines-title::after{ bottom:-14px; transform: rotate(1deg); }
 
     .tagline{
       margin:0;
@@ -230,11 +219,43 @@
       letter-spacing:.25px;
     }
 
+    .lockline{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color: rgba(185,217,197,.92);
+      font-size: 12.5px;
+      padding-left: 2px;
+    }
+    .lockIcon{
+      width: 16px; height: 16px;
+      border: 1px solid rgba(255,212,138,.45);
+      border-radius: 4px;
+      position: relative;
+      box-shadow: 0 12px 18px rgba(0,0,0,.35);
+    }
+    .lockIcon::before{
+      content:"";
+      position:absolute;
+      left: 3px; right: 3px;
+      top: -6px; height: 8px;
+      border: 1px solid rgba(255,212,138,.45);
+      border-bottom:none;
+      border-radius: 10px 10px 0 0;
+      opacity:.9;
+    }
+    .keyDot{
+      width: 7px; height: 7px;
+      border-radius: 999px;
+      background: rgba(255,212,138,.85);
+      box-shadow: 0 0 22px rgba(255,212,138,.25);
+    }
+
     .controls{
       display:flex;
       gap:10px;
       align-items:center;
-      margin-top: 4px;
+      margin-top: 6px;
       justify-content:flex-end;
       flex-wrap:wrap;
     }
@@ -247,7 +268,7 @@
       padding: 10px 12px;
       border-radius: 12px;
       cursor:pointer;
-      font-weight: 650;
+      font-weight: 700;
       letter-spacing:.2px;
       box-shadow: 0 14px 30px var(--shadow);
       transition: transform .12s ease, border-color .12s ease, filter .12s ease;
@@ -278,7 +299,7 @@
       position:relative;
     }
 
-    /* 🌿 VINE FRAME AROUND TEXT (no PNG needed) */
+    /* 🌿 vine frame around cards */
     .card::before{
       content:"";
       position:absolute;
@@ -287,23 +308,19 @@
       pointer-events:none;
       opacity:.95;
       background:
-        /* corner leaf clusters */
-        radial-gradient(18px 14px at 6% 10%, rgba(157,255,191,.42), transparent 65%),
+        radial-gradient(18px 14px at 6% 10%, rgba(157,255,191,.44), transparent 65%),
         radial-gradient(18px 14px at 14% 6%, rgba(157,255,191,.30), transparent 65%),
-        radial-gradient(18px 14px at 86% 8%, rgba(157,255,191,.36), transparent 65%),
+        radial-gradient(18px 14px at 86% 8%, rgba(157,255,191,.38), transparent 65%),
         radial-gradient(18px 14px at 94% 12%, rgba(157,255,191,.30), transparent 65%),
-        radial-gradient(18px 14px at 8% 90%, rgba(157,255,191,.36), transparent 65%),
+        radial-gradient(18px 14px at 8% 90%, rgba(157,255,191,.38), transparent 65%),
         radial-gradient(18px 14px at 14% 94%, rgba(157,255,191,.28), transparent 65%),
-        radial-gradient(18px 14px at 88% 92%, rgba(157,255,191,.36), transparent 65%),
+        radial-gradient(18px 14px at 88% 92%, rgba(157,255,191,.38), transparent 65%),
         radial-gradient(18px 14px at 94% 88%, rgba(157,255,191,.28), transparent 65%),
-
-        /* thin vine lines around edges */
         linear-gradient(90deg, rgba(157,255,191,.22), rgba(157,255,191,.05), rgba(157,255,191,.22)) top/100% 2px no-repeat,
         linear-gradient(90deg, rgba(157,255,191,.18), rgba(157,255,191,.04), rgba(157,255,191,.18)) bottom/100% 2px no-repeat,
         linear-gradient(180deg, rgba(157,255,191,.18), rgba(157,255,191,.04), rgba(157,255,191,.18)) left/2px 100% no-repeat,
         linear-gradient(180deg, rgba(157,255,191,.18), rgba(157,255,191,.04), rgba(157,255,191,.18)) right/2px 100% no-repeat;
-
-      filter: drop-shadow(0 0 12px rgba(157,255,191,.10));
+      filter: drop-shadow(0 0 14px rgba(157,255,191,.10));
     }
 
     .card h2{
@@ -316,8 +333,9 @@
       display:flex;
       align-items:center;
       gap:10px;
+      position:relative;
+      z-index:1;
     }
-
     .card .body{ padding: 14px 16px 16px; position:relative; z-index:1; }
 
     label{
@@ -327,7 +345,7 @@
       margin: 10px 0 6px;
     }
 
-    input, select, textarea{
+    input, select{
       width:100%;
       border: 1px solid var(--line);
       background: rgba(0,0,0,.18);
@@ -337,7 +355,7 @@
       outline:none;
       transition: border-color .15s ease, transform .12s ease;
     }
-    input:focus, select:focus, textarea:focus{
+    input:focus, select:focus{
       border-color: rgba(157,255,191,.42);
       box-shadow: 0 0 0 3px rgba(157,255,191,.10);
     }
@@ -358,12 +376,36 @@
       line-height: 1.35;
     }
 
+    .divider{
+      height:1px;
+      background: var(--line);
+      margin: 12px 0;
+    }
+
     .cta{
       display:flex;
       gap:10px;
       margin-top: 12px;
       flex-wrap:wrap;
       align-items:center;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(236,255,242,.14);
+      background: rgba(0,0,0,.18);
+      color: rgba(236,255,242,.92);
+      font-size: 12.5px;
+      width: fit-content;
+    }
+    .spark{
+      width: 8px; height: 8px; border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 18px rgba(157,255,191,.25);
     }
 
     .result{
@@ -411,48 +453,10 @@
       padding: 12px 12px;
       background: rgba(0,0,0,.16);
     }
-    .profile p{
-      margin: 6px 0;
-      color: rgba(236,255,242,.92);
-      line-height: 1.45;
-    }
-    .profile .muted{
-      color: rgba(185,217,197,.9);
-      font-size: 13px;
-    }
+    .profile p{ margin: 6px 0; line-height: 1.45; }
+    .profile .muted{ color: rgba(185,217,197,.9); font-size: 13px; }
 
-    /* Lock + key micro decoration */
-    .lockline{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding: 10px 16px 0;
-      color: rgba(185,217,197,.88);
-      font-size: 12.5px;
-    }
-    .lockIcon{
-      width: 16px; height: 16px;
-      border: 1px solid rgba(255,212,138,.45);
-      border-radius: 4px;
-      position: relative;
-      box-shadow: 0 12px 18px rgba(0,0,0,.35);
-    }
-    .lockIcon::before{
-      content:"";
-      position:absolute;
-      left: 3px; right: 3px;
-      top: -6px; height: 8px;
-      border: 1px solid rgba(255,212,138,.45);
-      border-bottom:none;
-      border-radius: 10px 10px 0 0;
-      opacity:.9;
-    }
-    .keyDot{
-      width: 7px; height: 7px;
-      border-radius: 999px;
-      background: rgba(255,212,138,.8);
-      box-shadow: 0 0 22px rgba(255,212,138,.25);
-    }
+    .tiny{ font-size: 12px; color: rgba(185,217,197,.85); margin: 0; }
 
     /* Blooming footer flowers */
     .footerFlowers{
@@ -489,39 +493,12 @@
       transform: translateY(4px) scale(1.05);
       filter: saturate(1.25) brightness(1.1);
     }
-
-    .tiny{
-      font-size: 12px; color: rgba(185,217,197,.85);
-      margin: 0;
-    }
-    .divider{
-      height:1px;
-      background: var(--line);
-      margin: 12px 0;
-    }
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border:1px solid rgba(236,255,242,.14);
-      background: rgba(0,0,0,.18);
-      color: rgba(236,255,242,.92);
-      font-size: 12.5px;
-      width: fit-content;
-    }
-    .spark{
-      width: 8px; height: 8px; border-radius: 999px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      box-shadow: 0 0 18px rgba(157,255,191,.25);
-    }
-
-    a{ color: var(--accent); }
   </style>
 </head>
+
 <body>
-  <div class="fireflies" aria-hidden="true"></div>
+  <!-- NO GIFS. No stickers. Only magic layers. -->
+  <div class="sparkleVeil" aria-hidden="true"></div>
   <div class="vineband top" aria-hidden="true"></div>
   <div class="vine left" aria-hidden="true"></div>
   <div class="vine right" aria-hidden="true"></div>
@@ -546,7 +523,6 @@
     </header>
 
     <main>
-      <!-- FORM -->
       <section class="card">
         <h2>🗝️ your key</h2>
         <div class="body">
@@ -597,15 +573,9 @@
             <button id="matchBtn" type="button">🌿 find my destiny</button>
             <span class="badge"><span class="spark"></span> secret garden build: v1</span>
           </div>
-
-          <p class="hint">
-            Next step (later): we’ll add individual character profile pages that preserve your exact lines.
-            For now, the profiles live inside the match card.
-          </p>
         </div>
       </section>
 
-      <!-- RESULT -->
       <aside class="card">
         <h2>🌙 your match</h2>
         <div class="result" id="result">
@@ -615,7 +585,6 @@
     </main>
   </div>
 
-  <!-- Blooming flower footer -->
   <div class="footerFlowers" aria-hidden="true">
     <div class="petalRow">
       <div class="flower"></div><div class="flower"></div><div class="flower"></div><div class="flower"></div>
@@ -624,13 +593,11 @@
     </div>
   </div>
 
-  <!-- Audio: must be started by user gesture -->
   <audio id="birds" preload="auto" loop>
     <source src="assets/birds.mp3" type="audio/mpeg" />
   </audio>
 
   <script>
-    // ====== 1) ARCHETYPES (yours + extra “guys wanna be that” types) ======
     const archetypes = [
       "Emotionally unavailable poet",
       "Star-crossed detective",
@@ -649,7 +616,6 @@
       "The last heir of a dead empire"
     ];
 
-    // ====== 2) CHARACTERS (your list + popular additions) ======
     const characters = [
       {
         id:"mj", name:"MJ", source:"Spider-Man",
@@ -730,7 +696,6 @@
       { id:"action", name:"Action Icons", filter: c => ["Chun-Li","Lara Croft","Black Widow"].includes(c.name) }
     ];
 
-    // ====== 3) COMPATIBILITY LOGIC ======
     function clamp(n,min,max){ return Math.max(min, Math.min(max, n)); }
 
     function baseSynergy(myA, likeA){
@@ -802,7 +767,6 @@
       return clamp(Math.round(score), 0, 100);
     }
 
-    // ====== 4) UI WIRING ======
     const myArchEl = document.getElementById("myArch");
     const likeArchEl = document.getElementById("likeArch");
     const poolEl = document.getElementById("characterPool");
@@ -849,7 +813,7 @@
       const r = document.documentElement.style;
       r.setProperty("--accent", theme.accent || "#9dffbf");
       r.setProperty("--accent2", theme.accent2 || "#ffd1f1");
-      r.setProperty("--bg1", theme.bg1 || "#07110c");
+      r.setProperty("--bg1", theme.bg1 || "#06110c");
       r.setProperty("--bg2", theme.bg2 || "#0b1a12");
 
       if (theme.bgImage && theme.bgImage.trim().length){
@@ -857,56 +821,6 @@
       } else {
         r.setProperty("--bgImage", "none");
       }
-    }
-
-    function makeMatch(isReroll=false){
-      const myA = myArchEl.value;
-      const likeA = likeArchEl.value;
-      const risk = riskEl.value;
-
-      const cands = eligibleCharacters();
-      if (!cands.length){
-        resultEl.innerHTML = `<p class="tiny">No characters in this pool yet. Pick “All”.</p>`;
-        return;
-      }
-
-      const pick = pickMatch(cands, myA, likeA, risk);
-      const score = computeScore(pick, myA, likeA, risk);
-
-      const userName = (nameEl.value || "Traveler").trim();
-      const toneName = (toneEl.value || "Keybearer").trim();
-
-      applyTheme(pick.theme || {});
-
-      const verdict = score >= 85 ? "FATED."
-                   : score >= 70 ? "DANGEROUSLY GOOD."
-                   : score >= 55 ? "PROMISING."
-                   : score >= 40 ? "COMPLICATED."
-                   : "CHAOTIC (but hot).";
-
-      const flavor = makeFlavorLine(userName, toneName, myA, likeA, pick, score);
-
-      resultEl.innerHTML = `
-        <p class="tiny">${isReroll ? "rerolled fate. the garden is smirking." : "a lock clicked somewhere."}</p>
-        <h3 class="matchTitle">${escapeHtml(pick.name)} <span style="opacity:.8;font-size:14px;color:var(--muted)">(${escapeHtml(pick.source)})</span></h3>
-
-        <div class="scoreRow">
-          <span><b>${score}%</b> compatibility — <b>${verdict}</b></span>
-          <div class="bar" aria-label="compatibility bar"><span style="width:${score}%"></span></div>
-        </div>
-
-        <div class="profile">
-          <p class="muted"><b>${escapeHtml(userName)}</b>, titled: <b>${escapeHtml(toneName)}</b></p>
-          <p class="muted">You are: <b>${escapeHtml(myA)}</b></p>
-          <p class="muted">You crave: <b>${escapeHtml(likeA)}</b></p>
-          <div class="divider"></div>
-          <p><b>Match read:</b> ${escapeHtml(pick.desc)}</p>
-          <p class="muted"><b>Tags:</b> ${pick.tags.map(t=>`#${escapeHtml(t)}`).join(" ")}</p>
-          <div class="divider"></div>
-          <p>${escapeHtml(flavor)}</p>
-          <p class="muted">Next upgrade: your preserved custom lines + full character profile pages.</p>
-        </div>
-      `;
     }
 
     function makeFlavorLine(userName, toneName, myA, likeA, pick, score){
@@ -934,6 +848,50 @@
         .replaceAll(">","&gt;")
         .replaceAll('"',"&quot;")
         .replaceAll("'","&#039;");
+    }
+
+    function makeMatch(isReroll=false){
+      const myA = myArchEl.value;
+      const likeA = likeArchEl.value;
+      const risk = riskEl.value;
+
+      const cands = eligibleCharacters();
+      const pick = pickMatch(cands, myA, likeA, risk);
+      const score = computeScore(pick, myA, likeA, risk);
+
+      const userName = (nameEl.value || "Traveler").trim();
+      const toneName = (toneEl.value || "Keybearer").trim();
+
+      applyTheme(pick.theme || {});
+
+      const verdict = score >= 85 ? "FATED."
+                   : score >= 70 ? "DANGEROUSLY GOOD."
+                   : score >= 55 ? "PROMISING."
+                   : score >= 40 ? "COMPLICATED."
+                   : "CHAOTIC (but hot).";
+
+      const flavor = makeFlavorLine(userName, toneName, myA, likeA, pick, score);
+
+      resultEl.innerHTML = `
+        <p class="tiny">${isReroll ? "rerolled fate. the garden is smirking." : "a lock clicked somewhere."}</p>
+        <h3 class="matchTitle">${escapeHtml(pick.name)} <span style="opacity:.8;font-size:14px;color:var(--muted)">(${escapeHtml(pick.source)})</span></h3>
+
+        <div class="scoreRow">
+          <span><b>${score}%</b> compatibility — <b>${verdict}</b></span>
+          <div class="bar"><span style="width:${score}%"></span></div>
+        </div>
+
+        <div class="profile">
+          <p class="muted"><b>${escapeHtml(userName)}</b>, titled: <b>${escapeHtml(toneName)}</b></p>
+          <p class="muted">You are: <b>${escapeHtml(myA)}</b></p>
+          <p class="muted">You crave: <b>${escapeHtml(likeA)}</b></p>
+          <div class="divider"></div>
+          <p><b>Match read:</b> ${escapeHtml(pick.desc)}</p>
+          <p class="muted"><b>Tags:</b> ${pick.tags.map(t=>`#${escapeHtml(t)}`).join(" ")}</p>
+          <div class="divider"></div>
+          <p>${escapeHtml(flavor)}</p>
+        </div>
+      `;
     }
 
     async function toggleBirds(){
